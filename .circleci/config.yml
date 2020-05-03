@@ -1,0 +1,23 @@
+version: 2.1
+
+jobs:
+    test:
+        docker:
+            - image: circleci/golang:1.12
+        steps:
+            - checkout
+            - run: go test
+    build:
+        docker:
+            - image: circleci/golang:1.12
+        steps:
+            - checkout
+            - run: go build
+    
+workflows:
+    test-and-build:
+        jobs:
+            - test
+            - build:
+                  requires:
+                      - test
